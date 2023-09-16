@@ -5768,7 +5768,7 @@ function checkkey()
     local savedkey = readfile("dsigfiureikuger.txt")
 
 	local keyless = game:HttpGet("https://raw.githubusercontent.com/lxnnydev/DeltaAndroid/main/iskeyless")
-	if string.find(keyless, "true") then
+	if string.find(keyless, "false") then
 		GrantAccess()
         return true
 	end
