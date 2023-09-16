@@ -4482,12 +4482,21 @@ end
 
 local AccountId = 8;
 
+function toboolean(str)
+    local bool = false
+    if str == "true" then
+        bool = true
+    end
+    return bool
+end
+
+
 function GetLink()
     return string.format("https://gateway.platoboost.com/a/%i?id=%i", AccountId, gethwid());
 end
 
 function Verify()
-    return game:HttpGet("https://gateway.platoboost.com/api/v1/public/delta/hwid?id="..gethwid())
+    return toboolean(game:HttpGet("https://gateway.platoboost.com/api/v1/public/delta/hwid?id="..gethwid()))
 end
 
 
