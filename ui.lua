@@ -4483,11 +4483,11 @@ end
 local AccountId = 8;
 
 function GetLink()
-    return string.format("https://gateway.platoboost.com/a/%i?id=%i", AccountId, game:GetService("Players").LocalPlayer.UserId);
+    return string.format("https://gateway.platoboost.com/a/%i?id=%i", AccountId, gethwid());
 end
 
 function Verify()
-    return game:HttpGet("https://gateway.platoboost.com/api/v1/public/delta/hwid?id="..game:GetService("Players").LocalPlayer.UserId)
+    return game:HttpGet("https://gateway.platoboost.com/api/v1/public/delta/hwid?id="..gethwid())
 end
 
 
