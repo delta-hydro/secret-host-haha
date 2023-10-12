@@ -9,50 +9,9 @@ local httpService = cloneref(game:GetService("HttpService"));
 local requestInternal = clonefunction(httpService.RequestInternal);
 local startRequest = clonefunction(requestInternal(httpService, { Url = "https://google.com" }).Start);
 
-local renv = getrenv()
-local _coroutineresume = clonefunction(renv.coroutine.resume);
-local _coroutinerunning = clonefunction(renv.coroutine.running);
-local _coroutineyield = clonefunction(renv.coroutine.yield);
-
 local _tablefind = clonefunction(table.find);
 
 local isA = clonefunction(game.IsA);
-
-local userAgent = table.concat({ identifyexecutor() }, " ");
-local userIdentifier = "";
-local userFingerprint = gethwid();
-
-local function performRequest(options)
-    local crt = _coroutinerunning();
-    local req = startRequest(requestInternal(httpService, options), function(x, y)
-        _coroutineresume(crt, y);
-    end);
-    return _coroutineyield();
-end;
-
-genv.request = function(options)
-    local headers = {
-        ["User-Agent"] = userAgent
-    };
-
-    if options.Headers ~= nil then
-        for i, v in options.Headers do
-            headers[i] = v;
-        end
-    end
-
-    headers["Delta-Fingerprint"] = userFingerprint;
-    headers["Delta-User-Identifier"] = userIdentifier;
-
-    local res = performRequest({
-        Url = options.Url,
-        Method = options.Method,
-        Headers = headers,
-        Body = options.Body
-    });
-    res.Success = res.StatusCode >= 200 and res.StatusCode <= 299;
-    return res;
-end;
 
 local GuiService = game:GetService("GuiService")
 
