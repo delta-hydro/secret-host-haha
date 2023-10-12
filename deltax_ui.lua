@@ -9,9 +9,10 @@ local httpService = cloneref(game:GetService("HttpService"));
 local requestInternal = clonefunction(httpService.RequestInternal);
 local startRequest = clonefunction(requestInternal(httpService, { Url = "https://google.com" }).Start);
 
-local _coroutinerunning = clonefunction(coroutine.running);
-local _coroutineresume = clonefunction(coroutine.resume);
-local _coroutineyield = clonefunction(coroutine.yield);
+local renv = getrenv()
+local _coroutineresume = clonefunction(renv.coroutine.resume);
+local _coroutinerunning = clonefunction(renv.coroutine.running);
+local _coroutineyield = clonefunction(renv.coroutine.yield);
 
 local _tablefind = clonefunction(table.find);
 
@@ -29,24 +30,28 @@ local function performRequest(options)
     return _coroutineyield();
 end;
 
-getgenv().request = function(options)
-    local headers = {};
-    headers["User-Agent"] = userAgent;
-    headers["Delta-Fingerprint"] = gethwid();
-    headers["Delta-User-Identifier"] = userIdentifier;
+genv.request = function(options)
+    local headers = {
+        ["User-Agent"] = userAgent
+    };
 
     if options.Headers ~= nil then
         for i, v in options.Headers do
             headers[i] = v;
         end
     end
-	
-    return performRequest({
+
+    headers["Delta-Fingerprint"] = userFingerprint;
+    headers["Delta-User-Identifier"] = userIdentifier;
+
+    local res = performRequest({
         Url = options.Url,
         Method = options.Method,
         Headers = headers,
         Body = options.Body
     });
+    res.Success = res.StatusCode >= 200 and res.StatusCode <= 299;
+    return res;
 end;
 
 local GuiService = game:GetService("GuiService")
@@ -4506,6 +4511,8 @@ buttons.Buttons.Button1.MouseButton1Click:Connect(function()
     -- whitelist test
     if key == "WHITELIST" then
         whitelist()
+    elseif string.find(key, "BOOST") then
+        boost_whitelist()
     elseif key == "1tseT" then
         GrantAccess()
     end
@@ -5748,6 +5755,18 @@ function whitelist()
     return false
 end
 
+function boost_whitelist()
+    local username = game.Players.LocalPlayer.Name
+    local response = game:HttpGet("https://deltafunny.dosware.repl.co/checkKey/" .. username)
+    if string.find(response, "true") then
+        writefile("dsigfiureikuger.txt", "BOOST")
+        GrantAccess()
+        return true
+    end
+    return false
+end
+
+
 
 
 
@@ -5775,6 +5794,13 @@ function checkkey()
 
     if(savedkey == "WHITELIST") then
         if whitelist() then
+            GrantAccess()
+            return true
+        end
+    end
+
+    if(savedkey == "BOOST") then
+        if boost_whitelist() then
             GrantAccess()
             return true
         end
