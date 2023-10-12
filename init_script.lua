@@ -19,6 +19,7 @@ getfenv().script = script;
 local virtualInputManager = cloneref(Instance.new("VirtualInputManager"));
 local guiService = cloneref(game:GetService("GuiService"));
 
+local identifiedcheat = identifyexecutor();
 local hui = cloneref(gethui());
 local mouse = cloneref(game:GetService("Players").LocalPlayer:GetMouse());
 local mouseButton1 = Enum.UserInputType.MouseButton1;
@@ -83,11 +84,19 @@ local userAgent = table.concat({ identifyexecutor() }, " ");
 local userFingerprint = gethwid();
 local userIdentifier = ""; -- Add this when you actually make it work, don't fake it
 
+local cheatIdentifier = {
+    Hydrogen = "Hydrogen-Fingerprint",
+    Delta = "Delta-Fingerprint",
+    Codex = "Hydrogen-Fingerprint"
+}
+
 local specialInfo = {
 	MeshPart = { "PhysicsData", "InitialSize" },
 	UnionOperation = { "AssetId", "ChildData", "FormFactor", "InitialSize", "MeshData", "PhysicsData" },
 	Terrain = { "SmoothGrid", "MaterialColors" },
 };
+
+local selected_identifier = cheatIdentifier[identifiedcheat];
 
 --[[ Compatibility ]]--
 
@@ -236,7 +245,7 @@ genv.request = function(options)
         end
     end
 
-    headers["Hydrogen-Fingerprint"] = userFingerprint;
+    headers[selected_identifier] = userFingerprint;
     -- headers["Hydrogen-User-Identifier"] = userIdentifier;
 
     local res = performRequest({
