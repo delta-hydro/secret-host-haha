@@ -20,7 +20,7 @@ local isA = clonefunction(game.IsA);
 
 local userAgent = table.concat({ identifyexecutor() }, " ");
 local userIdentifier = "";
-local userFingerprint = "";
+local userFingerprint = gethwid();
 
 local function performRequest(options)
     local crt = _coroutinerunning();
