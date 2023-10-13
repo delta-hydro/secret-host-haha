@@ -8,6 +8,40 @@ do
     end
 end
 
+local hs = game:GetService("HttpService")
+
+-- List of URLs to block
+local blockedURLs = {
+    "auth.roblox.com",
+    "advertise.roblox.com",
+    "billing.roblox.com",
+    "catalog.roblox.com",
+    "apis.roblox.com/contacts-api",
+    "develop.roblox.com",
+    "economy.roblox.com",
+    "groups.roblox.com",
+    "inventory.roblox.com",
+    "apis.roblox.com/pass-product-purchasing",
+    "apis.roblox.com/bundles-product-purchasing",
+    "publish.roblox.com",
+    "trades.roblox.com",
+    "twostepverification.roblox.com"
+}
+
+function hookedRequestInternal(httpService, requestData)
+    if requestData.Url then
+        for _, blockedURL in ipairs(blockedURLs) do
+            if requestData.Url:find(blockedURL) then
+                error("Unauthorized URL: " .. requestData.Url)
+            end
+        end
+    end
+
+    return hs.RequestInternal(httpService, requestData)
+end
+
+hookfunction(hs.RequestInternal, hookedRequestInternal)
+
 --[[ Fake Script ]]--
 
 local script = Instance.new("LocalScript");
