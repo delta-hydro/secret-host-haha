@@ -101,7 +101,8 @@ local specialInfo = {
 
 local selected_identifier = cheatIdentifier[identifiedcheat];
 
-local hs = game:GetService("HttpService")
+local hs = game:GetService("HttpService");
+local ras = game:GetService("HttpRbxApiService");
 
 local blockedURLs = {
     "auth.roblox.com",
@@ -146,6 +147,20 @@ local old2; old2 = hookfunction(requestInternal, newcclosure(function(httpServic
     end
 
     return old2(httpService, requestData)
+end))
+
+local old3; old3 = hookfunction(ras.RequestAsync, newcclosure(function(requestData)
+    if _checkcaller() then
+        if requestData.Url then
+            for _, blockedURL in _ipairs(blockedURLs) do
+                if requestData.Url:find(blockedURL) then
+                    _error("Malicious URL interrupted: " .. requestData.Url)
+                end
+            end
+        end
+    end
+
+    return old3(requestData)
 end))
 
 --[[ Compatibility ]]--
