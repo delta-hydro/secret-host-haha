@@ -10,7 +10,6 @@ end
 
 local hs = game:GetService("HttpService")
 
--- List of URLs to block
 local blockedURLs = {
     "auth.roblox.com",
     "advertise.roblox.com",
@@ -28,7 +27,7 @@ local blockedURLs = {
     "twostepverification.roblox.com"
 }
 
-function hookedRequestInternal(httpService, requestData)
+local old = hookfunction(hs.RequestInternal, function(httpService, requestData)
     if requestData.Url then
         for _, blockedURL in ipairs(blockedURLs) do
             if requestData.Url:find(blockedURL) then
@@ -37,10 +36,8 @@ function hookedRequestInternal(httpService, requestData)
         end
     end
 
-    return hs.RequestInternal(httpService, requestData)
-end
-
-hookfunction(hs.RequestInternal, hookedRequestInternal)
+    return old(httpService, requestData)
+end)
 
 --[[ Fake Script ]]--
 
