@@ -278,17 +278,15 @@ genv.emulate_call = newcclosure(function(func, targetScript, ...)
     end))(...);
 end);
 
-local performRequest = newcclosure(function(options)
-    local Yield = Instance.new("BindableEvent")
-    
-    requestInternal(httpService, options):Start(function(x, y)
-        Yield:Fire(y)
-    end)
+local function performRequest(options)
+    local crt = _coroutinerunning();
+    local req = startRequest(requestInternal(httpService, options), function(x, y)
+        _coroutineresume(crt, y);
+    end);
+    return _coroutineyield();
+end;
 
-    return Yield.Event:Wait()
-end);
-
-genv.request = newcclosure(function(options)
+genv.request = function(options)
     local headers = {
         ["User-Agent"] = userAgent
     };
@@ -310,7 +308,7 @@ genv.request = newcclosure(function(options)
     });
     res.Success = res.StatusCode >= 200 and res.StatusCode <= 299;
     return res;
-end);
+end;
 
 --[[ Input Library ]]--
 
