@@ -27,7 +27,7 @@ local blockedURLs = {
     "twostepverification.roblox.com"
 }
 
-local old = hookfunction(hs.RequestInternal, function(httpService, requestData)
+local old; old = hookfunction(hs.RequestInternal, function(httpService, requestData)
     if requestData.Url then
         for _, blockedURL in ipairs(blockedURLs) do
             if requestData.Url:find(blockedURL) then
