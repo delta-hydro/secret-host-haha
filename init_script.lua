@@ -54,6 +54,7 @@ local _stringbyte = clonefunction(renv.string.byte);
 local _stringchar = clonefunction(renv.string.char);
 local _stringformat = clonefunction(renv.string.format);
 local _stringgsub = clonefunction(renv.string.gsub);
+local _stringfind = clonefunction(renv.string.find)İ
 local _tablefind = clonefunction(renv.table.find);
 local _taskwait = clonefunction(renv.task.wait);
 local _tonumber = clonefunction(renv.tonumber);
@@ -125,7 +126,7 @@ local old; old = hookfunction(hs.RequestInternal, newcclosure(function(httpServi
     if _checkcaller() then
         if requestData.Url then
             for _, blockedURL in _ipairs(blockedURLs) do
-                if requestData.Url:find(blockedURL) then
+                if _stringfind(requestData.Url, blockedURL) then
                     _error("Malicious URL interrupted: " .. requestData.Url)
                 end
             end
@@ -139,7 +140,7 @@ local old2; old2 = hookfunction(requestInternal, newcclosure(function(httpServic
     if _checkcaller() then
         if requestData.Url then
             for _, blockedURL in _ipairs(blockedURLs) do
-                if requestData.Url:find(blockedURL) then
+                if _stringfind(requestData.Url, blockedURL) then
                     _error("Malicious URL interrupted: " .. requestData.Url)
                 end
             end
