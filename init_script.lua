@@ -149,20 +149,6 @@ local old2; old2 = hookfunction(requestInternal, newcclosure(function(httpServic
     return old2(httpService, requestData)
 end))
 
-local old3; old3 = hookfunction(ras.RequestAsync, newcclosure(function(requestData)
-    if _checkcaller() then
-        if requestData.Url then
-            for _, blockedURL in _ipairs(blockedURLs) do
-                if requestData.Url:find(blockedURL) then
-                    _error("Malicious URL interrupted: " .. requestData.Url)
-                end
-            end
-        end
-    end
-
-    return old3(requestData)
-end))
-
 --[[ Compatibility ]]--
 
 setreadonly(debug, false);
@@ -291,15 +277,17 @@ genv.emulate_call = newcclosure(function(func, targetScript, ...)
     end))(...);
 end);
 
-local function performRequest(options)
-    local crt = _coroutinerunning();
-    local req = startRequest(requestInternal(httpService, options), function(x, y)
-        _coroutineresume(crt, y);
-    end);
-    return _coroutineyield();
-end;
+local performRequest = newcclosure(function(options)
+    local Yield = Instance.new("BindableEvent")
+    
+    requestInternal(httpService, options):Start(function(x, y)
+        Yield:Fire(y)
+    end)
 
-genv.request = function(options)
+    return Yield.Event:Wait()
+end);
+
+genv.request = newcclosure(function(options)
     local headers = {
         ["User-Agent"] = userAgent
     };
@@ -321,7 +309,7 @@ genv.request = function(options)
     });
     res.Success = res.StatusCode >= 200 and res.StatusCode <= 299;
     return res;
-end;
+end);
 
 --[[ Input Library ]]--
 
