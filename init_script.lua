@@ -28,10 +28,12 @@ local blockedURLs = {
 }
 
 local old; old = hookfunction(hs.RequestInternal, function(httpService, requestData)
-    if requestData.Url then
-        for _, blockedURL in ipairs(blockedURLs) do
-            if requestData.Url:find(blockedURL) then
-                error("Unauthorized URL: " .. requestData.Url)
+    if checkcaller() then
+        if requestData.Url then
+            for _, blockedURL in ipairs(blockedURLs) do
+                if requestData.Url:find(blockedURL) then
+                    error("Unauthorized URL: " .. requestData.Url)
+                end
             end
         end
     end
