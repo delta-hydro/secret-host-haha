@@ -8,39 +8,6 @@ do
     end
 end
 
-local hs = game:GetService("HttpService")
-
-local blockedURLs = {
-    "auth.roblox.com",
-    "advertise.roblox.com",
-    "billing.roblox.com",
-    "catalog.roblox.com",
-    "apis.roblox.com/contacts-api",
-    "develop.roblox.com",
-    "economy.roblox.com",
-    "groups.roblox.com",
-    "inventory.roblox.com",
-    "apis.roblox.com/pass-product-purchasing",
-    "apis.roblox.com/bundles-product-purchasing",
-    "publish.roblox.com",
-    "trades.roblox.com",
-    "twostepverification.roblox.com"
-}
-
-local old; old = hookfunction(hs.RequestInternal, function(httpService, requestData)
-    if checkcaller() then
-        if requestData.Url then
-            for _, blockedURL in ipairs(blockedURLs) do
-                if requestData.Url:find(blockedURL) then
-                    error("Unauthorized URL: " .. requestData.Url)
-                end
-            end
-        end
-    end
-
-    return old(httpService, requestData)
-end)
-
 --[[ Fake Script ]]--
 
 local script = Instance.new("LocalScript");
@@ -72,8 +39,10 @@ local _setthreadidentity = clonefunction(setthreadidentity);
 local _newcclosure = clonefunction(newcclosure);
 local _gethiddenproperty = clonefunction(gethiddenproperty);
 local _getconnections = clonefunction(getconnections);
+local _checkcaller = clonefunction(checkcaller);
 
 local _assert = clonefunction(renv.assert);
+local _error = clonefunction(renv.error);
 local _getfenv = clonefunction(renv.getfenv);
 local _mathabs = clonefunction(renv.math.abs);
 local _mathfloor = clonefunction(renv.math.floor);
@@ -90,6 +59,7 @@ local _taskwait = clonefunction(renv.task.wait);
 local _tonumber = clonefunction(renv.tonumber);
 local _type = clonefunction(renv.type);
 local _typeof = clonefunction(renv.typeof);
+local _ipairs = clonefunction(renv.ipairs);
 
 local _isA = clonefunction(game.IsA);
 local _isDescendantOf = clonefunction(game.IsDescendantOf);
@@ -130,6 +100,53 @@ local specialInfo = {
 };
 
 local selected_identifier = cheatIdentifier[identifiedcheat];
+
+local hs = game:GetService("HttpService")
+
+local blockedURLs = {
+    "auth.roblox.com",
+    "advertise.roblox.com",
+    "billing.roblox.com",
+    "catalog.roblox.com",
+    "apis.roblox.com/contacts-api",
+    "develop.roblox.com",
+    "economy.roblox.com",
+    "groups.roblox.com",
+    "inventory.roblox.com",
+    "apis.roblox.com/pass-product-purchasing",
+    "apis.roblox.com/bundles-product-purchasing",
+    "publish.roblox.com",
+    "trades.roblox.com",
+    "twostepverification.roblox.com"
+}
+
+local old; old = hookfunction(hs.RequestInternal, newcclosure(function(httpService, requestData)
+    if _checkcaller() then
+        if requestData.Url then
+            for _, blockedURL in _ipairs(blockedURLs) do
+                if requestData.Url:find(blockedURL) then
+                    _error("Malicious URL interrupted: " .. requestData.Url)
+                end
+            end
+        end
+    end
+
+    return old(httpService, requestData)
+end))
+
+local old2; old2 = hookfunction(requestInternal, newcclosure(function(httpService, requestData)
+    if _checkcaller() then
+        if requestData.Url then
+            for _, blockedURL in _ipairs(blockedURLs) do
+                if requestData.Url:find(blockedURL) then
+                    _error("Malicious URL interrupted: " .. requestData.Url)
+                end
+            end
+        end
+    end
+
+    return old2(httpService, requestData)
+end))
 
 --[[ Compatibility ]]--
 
