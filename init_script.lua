@@ -101,53 +101,6 @@ local specialInfo = {
 
 local selected_identifier = cheatIdentifier[identifiedcheat];
 
-local hs = game:GetService("HttpService")
-
-local blockedURLs = {
-    "auth.roblox.com",
-    "advertise.roblox.com",
-    "billing.roblox.com",
-    "catalog.roblox.com",
-    "apis.roblox.com/contacts-api",
-    "develop.roblox.com",
-    "economy.roblox.com",
-    "groups.roblox.com",
-    "inventory.roblox.com",
-    "apis.roblox.com/pass-product-purchasing",
-    "apis.roblox.com/bundles-product-purchasing",
-    "publish.roblox.com",
-    "trades.roblox.com",
-    "twostepverification.roblox.com"
-}
-
-local old; old = hookfunction(hs.RequestInternal, newcclosure(function(httpService, requestData)
-    if _checkcaller() then
-        if requestData.Url then
-            for _, blockedURL in _ipairs(blockedURLs) do
-                if requestData.Url:find(blockedURL) then
-                    _error("Malicious URL interrupted: " .. requestData.Url)
-                end
-            end
-        end
-    end
-
-    return old(httpService, requestData)
-end))
-
-local old2; old2 = hookfunction(requestInternal, newcclosure(function(httpService, requestData)
-    if _checkcaller() then
-        if requestData.Url then
-            for _, blockedURL in _ipairs(blockedURLs) do
-                if requestData.Url:find(blockedURL) then
-                    _error("Malicious URL interrupted: " .. requestData.Url)
-                end
-            end
-        end
-    end
-
-    return old2(httpService, requestData)
-end))
-
 --[[ Compatibility ]]--
 
 setreadonly(debug, false);
