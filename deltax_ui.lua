@@ -4451,13 +4451,57 @@ function GetLink()
     return string.format("https://gateway.platoboost.com/a/%i?id=%i", AccountId, game:GetService("Players").LocalPlayer.UserId);
 end
 
+local rateLimit = false;
+local rateLimitCountdown = 0;
+local errorWait = false;
+
 function Verify()
-    if string.find(game:HttpGet("https://gateway.platoboost.com/api/v1/public/delta/hwid?id="..game:GetService("Players").LocalPlayer.UserId), "true") then
-        return true
-    else
+    if errorWait or rateLimit then 
         return false
+    end;
+
+    DELTA["18"]["Text"] = "Checking key...";
+
+    local response = request({
+        Url = "https://gateway.platoboost.com/api/v1/public/delta/hwid?id=" .. game:GetService("Players").LocalPlayer.UserId,
+        Method = "GET"
+    })
+
+    if response.StatusCode == 200 then
+        if string.find(response.Body, "true") then
+            DELTA["18"]["Text"] = "Successfully whitelisted key!";
+            return true
+        else
+            DELTA["18"]["Text"] = "Invalid key detected, please try again!";
+            return false
+        end
+    elseif response.StatusCode == 429 then
+        if not rateLimit then 
+            rateLimit = true
+            rateLimitCountdown = 10
+            task.spawn(function() 
+                --cloudflare limits for 10seconds.
+                while rateLimit do
+                    DELTA["18"]["Text"] = "You are being rate-limited, please slow down. Try again in " .. rateLimitCountdown .. " seconds.";
+                    wait(1)
+                    rateLimitCountdown = rateLimitCountdown - 1;
+                    
+                    if rateLimitCountdown < 0 then
+                        rateLimit = false;
+                        rateLimitCountdown = 0;
+                        DELTA["18"]["Text"] = "Rate limit is over, please try again.";
+                    end
+                end
+            end) 
+        end
+    elseif response.StatusCode == 500 then
+        errorWait = true
+        task.spawn(function() 
+            DELTA["18"]["Text"] = "An error has occured in the server, please wait 3 seconds and try again.";
+            wait(3) 
+            errorWait = false 
+        end)
     end
-    
 end
 
 
