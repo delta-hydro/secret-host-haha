@@ -237,7 +237,7 @@ local function performRequest(options)
     return _coroutineyield();
 end;
 
-genv.request = newcclosure(function(options)
+genv.request = function(options)
     local headers = {
         ["User-Agent"] = userAgent
     };
@@ -259,7 +259,7 @@ genv.request = newcclosure(function(options)
     });
     res.Success = res.StatusCode >= 200 and res.StatusCode <= 299;
     return res;
-end);
+end;
 
 --[[ Input Library ]]--
 
