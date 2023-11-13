@@ -1762,7 +1762,7 @@ DELTA["c0"]["MultiLine"] = true;
 DELTA["c0"]["BackgroundTransparency"] = 1;
 DELTA["c0"]["Size"] = UDim2.new(0.9882024526596069, 0, 0.9716954827308655, 0);
 DELTA["c0"]["Text"] = "";
-DELTA["c0"]["PlaceholderText"] = "Thank you for using Delta <3\nDelta is made by Lxnny and #TeamDelta ! (ayaan is STUPID)";
+DELTA["c0"]["PlaceholderText"] = "Thank you for using Delta <3\nDelta is made by Lxnny and #TeamDelta !";
 DELTA["c0"]["Position"] = UDim2.new(0.011494521982967854, 0, 0.012946978211402893, 3);
 DELTA["c0"]["AutomaticSize"] = Enum.AutomaticSize.XY;
 DELTA["c0"]["Visible"] = false;
@@ -4463,7 +4463,7 @@ function Verify()
     DELTA["18"]["Text"] = "Checking key...";
 
     local response = request({
-        Url = "https://gateway.platoboost.com/api/v1/public/delta/hwid?id=" .. game:GetService("Players").LocalPlayer.UserId,
+        Url = "https://api1.platoboost.com/v1/public/whitelist/8/" .. game:GetService("Players").LocalPlayer.UserId,
         Method = "GET"
     })
 
@@ -4475,6 +4475,9 @@ function Verify()
             DELTA["18"]["Text"] = "Invalid key detected, please try again!";
             return false
         end
+    elseif response.StatusCode == 204 then
+		DELTA["18"]["Text"] = "Invalid key detected, please try again!";
+        return false;
     elseif response.StatusCode == 429 then
         if not rateLimit then 
             rateLimit = true
@@ -4951,9 +4954,6 @@ local function GetPing()
 return localplr:GetNetworkPing()
 end
 
-game:GetService("RunService").RenderStepped:Connect(function()
-    Network.Overlay.Holder.Information.Ping.Text = "<font color=\"#4FA4F2\">" .. tostring(math.floor(GetPing() * 1000)) .. "</font> MS Ping"
-    end)
 
 local RunService = game:GetService("RunService")
 local FpsLabel = Network.Overlay.Holder.Information.Memory
@@ -5785,7 +5785,7 @@ function checkkey()
     local savedkey = readfile("dsigfiureikuger.txt")
 
 	local keyless = game:HttpGet("https://raw.githubusercontent.com/lxnnydev/DeltaAndroid/main/iskeyless")
-	if string.find(keyless, "false") then
+	if string.find(keyless, "true") then
 		GrantAccess()
         return true
 	end
