@@ -6,8 +6,6 @@
 ]]
 
 local httpService = cloneref(game:GetService("HttpService"));
-local requestInternal = clonefunction(httpService.RequestInternal);
-local startRequest = clonefunction(requestInternal(httpService, { Url = "https://google.com" }).Start);
 
 local _tablefind = clonefunction(table.find);
 
