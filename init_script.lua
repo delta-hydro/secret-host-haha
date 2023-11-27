@@ -1,3 +1,10 @@
+--[[ 
+Here's to the guy that refused to actually be helpful and steal money off of kids!
+
+You are a pooron and you serve 0 purpose in your life, all you could do was skid some vulns and steal some kids robux
+If you have the chance to do it; kill yourself
+--]]
+
 --[[ Initialisation ]]--
 
 do
@@ -72,8 +79,6 @@ local _sendMouseWheelEvent = clonefunction(virtualInputManager.SendMouseWheelEve
 local _getGuiInset = clonefunction(guiService.GetGuiInset);
 
 local httpService = cloneref(game:GetService("HttpService"));
-local requestInternal = clonefunction(httpService.RequestInternal);
-local startRequest = clonefunction(requestInternal(httpService, { Url = "https://google.com" }).Start);
 
 local _coroutineresume = clonefunction(renv.coroutine.resume);
 local _coroutinerunning = clonefunction(renv.coroutine.running);
@@ -227,38 +232,6 @@ genv.emulate_call = newcclosure(function(func, targetScript, ...)
         _setthreadidentity(oldIdentity);
         return ret;
     end))(...);
-end);
-
-local function performRequest(options)
-    local crt = _coroutinerunning();
-    local req = startRequest(requestInternal(httpService, options), function(x, y)
-        _coroutineresume(crt, y);
-    end);
-    return _coroutineyield();
-end;
-
-genv.request = newcclosure(function(options)
-    local headers = {
-        ["User-Agent"] = userAgent
-    };
-
-    if options.Headers ~= nil then
-        for i, v in options.Headers do
-            headers[i] = v;
-        end
-    end
-
-    headers[selected_identifier] = userFingerprint;
-    -- headers["Hydrogen-User-Identifier"] = userIdentifier;
-
-    local res = performRequest({
-        Url = options.Url,
-        Method = options.Method,
-        Headers = headers,
-        Body = options.Body
-    });
-    res.Success = res.StatusCode >= 200 and res.StatusCode <= 299;
-    return res;
 end);
 
 --[[ Input Library ]]--
