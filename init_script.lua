@@ -15,6 +15,8 @@ do
     end
 end
 
+repeat wait() until game:IsLoaded() -- precaution
+
 --[[ Fake Script ]]--
 
 local script = Instance.new("LocalScript");
