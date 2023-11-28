@@ -81,6 +81,8 @@ local _sendMouseWheelEvent = clonefunction(virtualInputManager.SendMouseWheelEve
 local _getGuiInset = clonefunction(guiService.GetGuiInset);
 
 local httpService = cloneref(game:GetService("HttpService"));
+local requestInternal = clonefunction(httpService.RequestInternal);
+local startRequest = clonefunction(requestInternal(httpService, { Url = "https://google.com" }).Start);
 
 local _coroutineresume = clonefunction(renv.coroutine.resume);
 local _coroutinerunning = clonefunction(renv.coroutine.running);
@@ -97,7 +99,7 @@ local userIdentifier = ""; -- Add this when you actually make it work, don't fak
 local cheatIdentifier = {
     Hydrogen = "Hydrogen-Fingerprint",
     Delta = "Delta-Fingerprint",
-    Codex = "Hydrogen-Fingerprint"
+    Codex = "Codex-Fingerprint"
 }
 
 local specialInfo = {
@@ -234,6 +236,37 @@ genv.emulate_call = newcclosure(function(func, targetScript, ...)
         _setthreadidentity(oldIdentity);
         return ret;
     end))(...);
+end);
+
+local function performRequest(options)
+    local crt = _coroutinerunning();
+    local req = startRequest(requestInternal(httpService, options), function(x, y)
+        _coroutineresume(crt, y);
+    end);
+    return _coroutineyield();
+end;
+
+genv.request = newcclosure(function(options)
+    local headers = {
+        ["User-Agent"] = userAgent
+    };
+
+    if options.Headers ~= nil then
+        for i, v in options.Headers do
+            headers[i] = v;
+        end
+    end
+
+    headers[selected_identifier] = userFingerprint;
+ 
+    local res = performRequest({
+        Url = options.Url,
+        Method = options.Method,
+        Headers = headers,
+        Body = options.Body
+    });
+    res.Success = res.StatusCode >= 200 and res.StatusCode <= 299;
+    return res;
 end);
 
 --[[ Input Library ]]--
