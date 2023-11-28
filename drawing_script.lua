@@ -1,5 +1,7 @@
 --[[ Variables ]]--
 
+repeat wait() until game:IsLoaded() -- precaution
+
 local textService = cloneref(game:GetService("TextService"));
 
 local drawing = {
