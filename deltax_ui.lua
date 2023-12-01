@@ -4517,8 +4517,6 @@ buttons.Buttons.Button1.MouseButton1Click:Connect(function()
         whitelist()
     elseif string.find(key, "BOOST") then
         boost_whitelist()
-    elseif key == "1tseT" then
-        GrantAccess()
     end
 
     if Verify() then
