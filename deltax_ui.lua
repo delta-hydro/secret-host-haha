@@ -4454,6 +4454,8 @@ local rateLimitCountdown = 0;
 local errorWait = false;
 
 function Verify()
+    local key = KeyInput.Text;
+
     if errorWait or rateLimit then 
         return false
     end;
@@ -4470,6 +4472,19 @@ function Verify()
             DELTA["18"]["Text"] = "Successfully whitelisted key!";
             return true
         else
+            if (#key > 0) then
+                local redeemResponse = request({
+                    Url = "https://api1.platoboost.com/v1/authenticators/redeem/8/" .. game:GetService("Players").LocalPlayer.UserId .. "/" .. key,
+                    Method = "POST"
+                });
+
+                if redeemResponse.StatusCode == 200 then
+                    if string.find(redeemResponse.Body, "true") then
+                        DELTA["18"]["Text"] = "Successfully redeemed key!";
+                        return true
+                    end
+                end           
+            end
             DELTA["18"]["Text"] = "Invalid key detected, please try again!";
             return false
         end
