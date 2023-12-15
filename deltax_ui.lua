@@ -1,3 +1,5 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/VegieIsCute/stuff/main/updateChecker.lua"))();
+
 --[[
 
     Title: Delta Version: X
