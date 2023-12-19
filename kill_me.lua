@@ -303,7 +303,7 @@ do
 	end
 
 	function utils:FormatNumber(input: number, float: number): string
-		if input &lt; 1000 then
+		if input < 1000 then
 			return tostring(input);
 		end
 		local denominationIndex = math.floor(math.log10(input) / 3);
@@ -637,7 +637,7 @@ do
 				self.connection = heartbeat:Connect(function()
 					if self:Validate() then
 						local now = tick();
-						if now - init &gt;= self.interval then
+						if now - init >= self.interval then
 							init = now;
 							self.value = getbatterypercentage();
 							self.updated:Fire(self.value);
@@ -648,7 +648,7 @@ do
 				self.connection = heartbeat:Connect(function()
 					if self:Validate() then
 						local now = tick();
-						if now - init &gt;= self.interval then
+						if now - init >= self.interval then
 							init = now;
 							self.value = self.value == 0 and 100 or self.value - 5;
 							self.updated:Fire(self.value);
@@ -752,7 +752,7 @@ do
 				self.connection = heartbeat:Connect(function()
 					if self:Validate() then
 						local now = tick();
-						if now - init &gt;= self.interval then
+						if now - init >= self.interval then
 							init = now;
 							self.value = fps:GetValue();
 							self.updated:Fire(self.value);
@@ -763,7 +763,7 @@ do
 				self.connection = heartbeat:Connect(function(step)
 					if self:Validate() then
 						local now = tick();
-						if now - init &gt;= self.interval then
+						if now - init >= self.interval then
 							init = now;
 							self.value = 1 / step;
 							self.updated:Fire(self.value);
@@ -820,7 +820,7 @@ do
 				self.connection = heartbeat:Connect(function()
 					if self:Validate() then
 						local now = tick();
-						if now - init &gt;= self.interval then
+						if now - init >= self.interval then
 							init = now;
 							self.value = ping:GetValue();
 							self.updated:Fire(self.value);
@@ -831,7 +831,7 @@ do
 				self.connection = heartbeat:Connect(function()
 					if self:Validate() then
 						local now = tick();
-						if now - init &gt;= self.interval then
+						if now - init >= self.interval then
 							init = now;
 							task.spawn(function()
 								self.value = (pinger:InvokeServer() - now) * 2000;
@@ -886,7 +886,7 @@ do
 				self.connection = heartbeat:Connect(function()
 					if self:Validate() then
 						local now = tick();
-						if now - init &gt;= self.interval then
+						if now - init >= self.interval then
 							init = now;
 							self.value = getsignalstrength();
 							self.updated:Fire(self.value);
@@ -897,7 +897,7 @@ do
 				self.connection = heartbeat:Connect(function()
 					if self:Validate() then
 						local now = tick();
-						if now - init &gt;= self.interval then
+						if now - init >= self.interval then
 							init = now;
 							self.value = self.value == 100 and 0 or self.value + 5;
 							self.updated:Fire(self.value);
@@ -1664,7 +1664,7 @@ do
 				local conn; conn = input.Changed:Connect(function(prop)
 					if prop == "UserInputState" and input.UserInputState == Enum.UserInputState.End then
 						conn:Disconnect();
-						triggerMenuSwitch(input.Position.X &lt;= passX);
+						triggerMenuSwitch(input.Position.X <= passX);
 						isDragging = false;
 					end
 				end);
@@ -3777,11 +3777,11 @@ do
 	end
 
 	local function calculateAbsoluteSize(inputValue, interval, absoluteSize)
-		local value = inputValue &lt; 0 and absoluteSize + inputValue or inputValue;
+		local value = inputValue < 0 and absoluteSize + inputValue or inputValue;
 		local result = -10;
 		repeat
 			result += interval + 10;
-		until result &gt;= value;
+		until result >= value;
 		return result;
 	end
 
@@ -4239,7 +4239,7 @@ do
 					validResults[index] = v;
 				end
 			end
-			if #webps &gt; 0 then
+			if #webps > 0 then
 				local res = utils:Request("https://projectevo.xyz/api/v1/utils/webptopng", "POST", { ["Content-Type"] = "application/json" }, httpService:JSONEncode(webps));
 				if res then
 					local x = httpService:JSONDecode(res);
@@ -5429,7 +5429,7 @@ do
 			
 			basis.fakeData.username.FocusLost:Connect(function()
 				local x = basis.fakeData.username.Text;
-				if #x &gt; 0 then
+				if #x > 0 then
 					globals.customSettings.spoofInfo.name = basis.fakeData.username.Text;
 				else
 					basis.fakeData.username.Text = globals.customSettings.spoofInfo.name;
