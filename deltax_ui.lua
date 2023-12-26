@@ -4649,7 +4649,7 @@ textbox.FocusLost:Connect(function()
     end
 --print"Searching"
     local KeyWordSearch = textbox.Text
-    local url = "https://scriptblox.com/api/script/search?q="..KeyWordSearch
+    local url = "https://scriptblox.com/api/script/search?q="..string.gsub(KeyWordSearch, " ", "%%20")
     local response = game:HttpGetAsync(url)
     local http = game:GetService("HttpService")
     local decoded = http:JSONDecode(response)
