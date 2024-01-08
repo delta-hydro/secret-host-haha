@@ -5435,7 +5435,7 @@ Teleport()
 
 -- Built-In scripts
 UILib.SavedScripts:Add("Keyboard", "loadstring(game:HttpGet('https://raw.githubusercontent.com/AZYsGithub/Delta-Scripts/main/MobileKeyboard.txt'))()","Built-In")
-UILib.SavedScripts:Add("HoHo Hub", "loadstring(game:HttpGet('https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI'))()","No Key")
+UILib.SavedScripts:Add("HoHo Hub", "loadstring(game:HttpGet('https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI'))()","Featured")
 
 
 -- Get all scripts and load em' (make sure Built-In scripts first otherwise Built-In scripts gonna under thr saved scripts) --nvm this shit
