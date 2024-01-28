@@ -4465,7 +4465,7 @@ function Verify()
     DELTA["18"]["Text"] = "Checking key...";
 
     local response = request({
-        Url = "https://api1.platoboost.com/v1/public/whitelist/8/" .. game:GetService("Players").LocalPlayer.UserId,
+        Url = "https://api1.platoboost.com/v1/public/whitelist/8/" .. game:GetService("Players").LocalPlayer.UserId .. "?s",
         Method = "GET"
     })
 
