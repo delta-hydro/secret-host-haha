@@ -94,7 +94,7 @@ local DaIconPositionX = ScreenCenterX - DaIconSize.X.Offset / 2
 local DaIconPositionY = ScreenCenterY - DaIconSize.Y.Offset / 2
 DELTA["DaIcon"].Position = UDim2.new(0, DaIconPositionX, 0, DaIconPositionY/20)
 DELTA["DaIcon"].Draggable = true
-DELTA["DaIcon"].Image = "rbxassetid://16026049341"
+DELTA["DaIcon"].Image = "rbxassetid://12730597972"
 DELTA["DaIcon"].BackgroundColor3 = Color3.fromRGB(26, 28, 36)
 
 DELTA["das"] = Instance.new("UICorner", DELTA["DaIcon"]);
