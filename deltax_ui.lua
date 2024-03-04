@@ -5774,7 +5774,7 @@ end
 function boost_whitelist()
     local username = game.Players.LocalPlayer.Name
     local response = game:HttpGet("https://deltafunny.dosware.repl.co/checkKey/" .. username)
-    if string.find(response, "true") then
+    if string.find(response, "cock_cock_cock") then
         writefile("dsigfiureikuger.txt", "BOOST")
         GrantAccess()
         return true
