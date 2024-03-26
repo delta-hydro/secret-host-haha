@@ -5776,7 +5776,7 @@ function boost_whitelist()
     local response = game:HttpGet("https://deltafunny.dosware.repl.co/checkKey/" .. username)
     if string.find(response, "cock_cock_cock") then
         writefile("dsigfiureikuger.txt", "BOOST")
-        GrantAccess()
+        --GrantAccess()
         return true
     end
     return false
