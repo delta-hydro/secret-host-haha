@@ -4431,7 +4431,7 @@ end
 
 -- Discord
 buttons.Button2.MouseButton1Click:Connect(function()
-    setclipboard("https://discord.gg/Wu9tFvVFaB")
+    setclipboard("https://discord.gg/deltaex")
     end)
 
 
@@ -5331,7 +5331,7 @@ UILib.Settings:AddDropdown("Icon Color", "Change the floating Icon's color", rea
 	end)
 
 UILib.Settings:AddButton("Join Discord", "Copies our discord invite", function()
-        setclipboard("https://discord.gg/deltaexploits")
+        setclipboard("https://discord.gg/deltaex")
         end)  
 
 UILib.Settings:AddButton("Rejoin", "Rejoins your current server", function()
