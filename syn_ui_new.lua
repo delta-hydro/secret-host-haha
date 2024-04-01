@@ -1,6 +1,6 @@
 -- Synapse X Remake made by @chillz_azy (yt)
 
-local synversion = "2.23.11"
+local synversion = "April Fools!"
 
 -- this shit function makes my script fucked
 --[[pcall(function()
@@ -3302,6 +3302,7 @@ local function C_84()
 		if isfile(value) then
 			task.wait(0.05)
             local editedString = string.gsub(value, [[d_android_script_dir\]], "")
+			print(editedString)
 			module:AddScriptTabSave(editedString, readfile(value))
 		end
 	end
