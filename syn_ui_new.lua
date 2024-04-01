@@ -3302,7 +3302,7 @@ local function C_84()
 		if isfile(value) then
 			task.wait(0.05)
             local editedString = string.gsub(value, [[d_android_script_dir\]], "")
-			module:AddScriptTabSave(value:sub(22, #file), readfile(value))
+			module:AddScriptTabSave(editedString, readfile(value))
 		end
 	end
 end;
