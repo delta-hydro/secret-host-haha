@@ -17,8 +17,6 @@ local GuiService = game:GetService("GuiService")
 
 
 
-local openurl = clonefunction(arceus.openurl) or nil
-local showtoast = clonefunction(show_toast) or testing_toast -- Custom toast
 local getversion = clonefunction(arceus.getversion) or nil -- APK version
 local ispermissiongranted = clonefunction(arceus.ispermissiongranted) or nil -- Storage perms
 
