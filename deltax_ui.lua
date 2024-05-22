@@ -4483,7 +4483,7 @@ function Verify()
         else
             if (#key > 0) then
                 local redeemResponse = request({
-                    Url = "https://api1.platoboost.com/v1/authenticators/redeem/8/" .. game:GetService("Players").LocalPlayer.UserId .. "/" .. key,
+                    Url = "https://api1.platoboost.com/v1/authenticators/redeem/8/" .. auth_id .. "/" .. key,
                     Method = "POST"
                 });
 
