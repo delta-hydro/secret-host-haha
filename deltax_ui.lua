@@ -101,7 +101,7 @@ local DaIconPositionY = ScreenCenterY - DaIconSize.Y.Offset / 2
 DELTA["DaIcon"].Position = UDim2.new(0, DaIconPositionX, 0, DaIconPositionY/20)
 DELTA["DaIcon"].Draggable = true
 DELTA["DaIcon"].Image = getcustomasset("new_logo.png")
-DELTA["DaIcon"].BackgroundColor3 = Color3.fromRGB(26, 28, 36)
+DELTA["DaIcon"].BackgroundColor3 = Color3.fromRGB(30, 32, 40)
 
 DELTA["das"] = Instance.new("UICorner", DELTA["DaIcon"]);
 
