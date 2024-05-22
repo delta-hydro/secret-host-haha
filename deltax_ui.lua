@@ -4451,7 +4451,7 @@ end
 
 
 local AccountId = 8;
-local auth_id = game:GetService("Players").LocalPlayer.UserId
+local auth_id = gethwid() or game:GetService("Players").LocalPlayer.UserId
 
 
 function GetLink()
@@ -4472,7 +4472,7 @@ function Verify()
     DELTA["18"]["Text"] = "Checking key...";
 
     local response = request({
-        Url = "https://api1.platoboost.com/v1/public/whitelist/8/" .. auth_id .. "?s",
+        Url = "https://api-gateway.platoboost.com/v1/public/whitelist/8/" .. auth_id .. "?s",
         Method = "GET"
     })
 
@@ -4483,7 +4483,7 @@ function Verify()
         else
             if (#key > 0) then
                 local redeemResponse = request({
-                    Url = "https://api1.platoboost.com/v1/authenticators/redeem/8/" .. auth_id .. "/" .. key,
+                    Url = "https://api-gateway.platoboost.com/v1/authenticators/redeem/8/" .. auth_id .. "/" .. key,
                     Method = "POST"
                 });
 
