@@ -5294,7 +5294,7 @@ UILib.Settings:AddDropdown("FPS Cap", "Change the FPS cap for a smoother experie
 		elseif selection == "120 FPS" then
 			setfpscap(120)
 		elseif selection == "Max FPS" then
-			setfpscap(getfpsmax())
+			setfpscap(0)
 		end
 	end)
 
