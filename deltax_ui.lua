@@ -4445,10 +4445,11 @@ end
 
 
 local AccountId = 8;
+local auth_id = pcall(gethwid) and gethwid() or game:GetService("Players").LocalPlayer.UserId
 
 
 function GetLink()
-    return string.format("https://gateway.platoboost.com/a/%i?id=%i", AccountId, game:GetService("Players").LocalPlayer.UserId);
+    return string.format("https://gateway.platoboost.com/a/%i?id=%i", AccountId, auth_id);
 end
 
 local rateLimit = false;
@@ -4465,7 +4466,7 @@ function Verify()
     DELTA["18"]["Text"] = "Checking key...";
 
     local response = request({
-        Url = "https://api1.platoboost.com/v1/public/whitelist/8/" .. game:GetService("Players").LocalPlayer.UserId .. "?s",
+        Url = "https://api1.platoboost.com/v1/public/whitelist/8/" .. auth_id .. "?s",
         Method = "GET"
     })
 
