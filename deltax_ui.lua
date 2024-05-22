@@ -4455,7 +4455,7 @@ local auth_id = pcall(gethwid) and gethwid() or game:GetService("Players").Local
 
 
 function GetLink()
-    return string.format("https://gateway.platoboost.com/a/%i?id=%i", AccountId, auth_id);
+    return string.format("https://gateway.platoboost.com/a/%i?id=%s", AccountId, auth_id);
 end
 
 local rateLimit = false;
