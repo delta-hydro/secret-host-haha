@@ -86,6 +86,12 @@ else
     DELTA["DaIcon"].Size = UDim2.new(0,45,0,45)
 end
 
+if not isfile("new_logo.png") then
+    local new_logo = request({Url = "https://raw.githubusercontent.com/delta-hydro/secret-host-haha/main/lxnnypfp7.png", Method = "GET"})
+    writefile("new_logo.png", new_logo.Body)
+end
+
+
 local DaIconSize = DELTA["DaIcon"].Size
 local ScreenCenterX = GuiService:GetScreenResolution().X / 2
 local ScreenCenterY = GuiService:GetScreenResolution().Y / 2
@@ -94,7 +100,7 @@ local DaIconPositionX = ScreenCenterX - DaIconSize.X.Offset / 2
 local DaIconPositionY = ScreenCenterY - DaIconSize.Y.Offset / 2
 DELTA["DaIcon"].Position = UDim2.new(0, DaIconPositionX, 0, DaIconPositionY/20)
 DELTA["DaIcon"].Draggable = true
-DELTA["DaIcon"].Image = "rbxassetid://12730597972"
+DELTA["DaIcon"].Image = getcustomasset("new_logo.png")
 DELTA["DaIcon"].BackgroundColor3 = Color3.fromRGB(26, 28, 36)
 
 DELTA["das"] = Instance.new("UICorner", DELTA["DaIcon"]);
