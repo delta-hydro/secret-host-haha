@@ -4451,7 +4451,7 @@ end
 
 
 local AccountId = 8;
-local auth_id = gethwid() or game:GetService("Players").LocalPlayer.UserId
+local auth_id = game:GetService("Players").LocalPlayer.UserId
 
 
 function GetLink()
